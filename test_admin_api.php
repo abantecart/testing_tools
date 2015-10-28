@@ -34,9 +34,9 @@ $(document).ready(function() {
 
 });
 
-var abantecart_url = 'http://localhost/abantecart114/index.php?s=pr_admin';
-var abantecart_ssl_url = 'http://localhost/abantecart114/index.php?s=pr_admin';
-
+var admin = 'admin_path';
+var abantecart_url = 'http://[domain]/index.php?s='+admin;
+var abantecart_ssl_url = 'https://[domain]/index.php?s='+admin;
 var token = '';
 var api_key = '';
 

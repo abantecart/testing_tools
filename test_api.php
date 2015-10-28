@@ -34,8 +34,8 @@ $(document).ready(function() {
 
 });
 
-var abantecart_url = 'http://dev01.algozone.net/abc_110/index.php';
-var abantecart_ssl_url = 'http://dev01.algozone.net/abc_110/index.php';
+var abantecart_url = 'http://[domain]/index.php';
+var abantecart_ssl_url = 'https://[domain]/index.php';
 
 var token = '';
 var api_key = '';
