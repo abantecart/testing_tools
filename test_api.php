@@ -1292,16 +1292,20 @@ body
 			<div class="container">
 			<form name="AccountFrm" id="AccountFrm">
 				<div class="field clear">
+					<div class="float_left">Loginname:</div>
+					<div class="float_right"><input type="text" value="loginname" id="AccountFrm_loginname	" name="loginname"></div>
+				</div>
+				<div class="field clear">
+					<div class="float_left">E-mail:</div>
+					<div class="float_right"><input type="text" value="test@test.com" id="AccountFrm_email" name="email"></div>
+				</div>
+				<div class="field clear">
 					<div class="float_left">First Name:</div>
 					<div class="float_right"><input type="text" value="First Name" id="AccountFrm_firstname" name="firstname"></div>
 				</div>
 				<div class="field clear">
 					<div class="float_left">Last Name:</div>
 					<div class="float_right"><input type="text" value="Last Name" id="AccountFrm_lastname" name="lastname"></div>
-				</div>
-				<div class="field clear">
-					<div class="float_left">E-mail:</div>
-					<div class="float_right"><input type="text" value="test@test.com" id="AccountFrm_email" name="email"></div>
 				</div>
 				<div class="field clear">
 					<div class="float_left">Phone:</div>
