@@ -1270,7 +1270,7 @@ body
 		<hr>
 		<div id="login_section" class="container">
 			<div class="field clear">
-				<div class="float_left">E-mail:</div>
+				<div class="float_left">Login name (E-mail if used as login):</div>
 				<div class="float_right"><input type="text" id="email" /></div>
 			</div>
 			<div class="field clear">
