@@ -35,9 +35,9 @@ $(document).ready(function() {
 });
 
 //add your AbanteCart main index.php URL here 
-var abantecart_url = '';
-var abantecart_ssl_url = '';
-
+ var abantecart_url = 'http://[domain]/index.php';
+ var abantecart_ssl_url = 'https://[domain]/index.php';
+ 
 var token = '';
 var api_key = '';
 
