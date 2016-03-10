@@ -34,8 +34,9 @@ $(document).ready(function() {
 
 });
 
-var abantecart_url = 'http://[domain]/index.php';
-var abantecart_ssl_url = 'https://[domain]/index.php';
+//add your AbanteCart main index.php URL here 
+var abantecart_url = '';
+var abantecart_ssl_url = '';
 
 var token = '';
 var api_key = '';
@@ -126,6 +127,35 @@ function remove_cart () {
 
 }
 
+function remove_cart_get() {
+
+    $('#api_responce').html( '' );
+    var remove = {};
+	remove[ $('#remove_key1').val() ] = 1;
+	remove[ $('#remove_key2').val() ] = 1;
+		
+	$.ajax({
+		type: 'get',
+		url: abantecart_url,
+		data: {
+			'rt': 'a/checkout/cart/delete',
+			'remove' : remove,
+			'api_key' : $('#api_key').val()
+		},
+		success: function (data) {
+			showResponse(this, data);
+		},
+		dataType: "text",
+		error: function(obj, status, msg)
+		{
+			console.log(obj);
+			console.log(status);
+			console.log(msg);
+			showResponse(this, obj.responseText);
+		}
+	});
+
+}
 
 
 function login () {
@@ -1270,7 +1300,7 @@ body
 		<hr>
 		<div id="login_section" class="container">
 			<div class="field clear">
-				<div class="float_left">Login name (E-mail if used as login):</div>
+				<div class="float_left">E-mail:</div>
 				<div class="float_right"><input type="text" id="email" /></div>
 			</div>
 			<div class="field clear">
@@ -1546,6 +1576,8 @@ body
 			<div class="field clear">
 				<a href="javascript:get_cart()" class="btn_standard float_left" id="get_cart"><span title="Cart Content" class="button1" id="done"><span>Show Cart Content</span></span></a>
 			</div>
+			<br>
+			<br>
 			<div class="container">
 				<div class="field clear">
 					<div class="float_left">Key 1:</div>
@@ -1558,8 +1590,16 @@ body
 			</div>
 
 			<div class="field clear">
-				<a href="javascript:remove_cart()" class="btn_standard float_left" id="remove_from_cart"><span title="Cart Content" class="button1" id="done"><span>Delete from Cart</span></span></a>
+				<a href="javascript:remove_cart()" class="btn_standard float_left" id="remove_from_cart"><span title="Cart Content" class="button1" id="done"><span>Delete from Cart (POST)</span></span></a>
 			</div>
+			<div class="field clear">
+				<a href="javascript:remove_cart_get()" class="btn_standard float_left" id="remove_from_cart"><span title="Cart Content" class="button1" id="done"><span>Delete from Cart (GET)</span></span></a>
+			</div>
+			
+		
+			<br>
+			<br>
+			
 			<div class="field clear">
 				<a href="javascript:get_shipping()" class="btn_standard float_left" id="get_shipping"><span title="Select Shipping" class="button1" id="done"><span>Checkout (Select Shipping)</span></span></a>
 			</div>
