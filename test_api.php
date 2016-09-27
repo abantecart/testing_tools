@@ -1025,14 +1025,18 @@ function get_confirmation () {
 
 function process_order() {
 
+	var values = {};
+	$.each($('#CreditCardFrm').serializeArray(), function(i, field) {
+	    values[field.name] = field.value;
+	});
+	values['rt'] = 'a/checkout/process';
+	values['token'] = token;
+	values['api_key'] = api_key;
+
 	$.ajax({
 		type: 'POST',
 		url: abantecart_ssl_url,
-		data: {
-			'rt': 'a/checkout/process', 
-			'token' : token, 
-			'api_key' : api_key
-		},
+		data: values,
 		success: function (data) {
 			showResponse(this, data);
 		},
@@ -1300,7 +1304,7 @@ body
 		<hr>
 		<div id="login_section" class="container">
 			<div class="field clear">
-				<div class="float_left">E-mail:</div>
+				<div class="float_left">Login name or Email:</div>
 				<div class="float_right"><input type="text" id="email" /></div>
 			</div>
 			<div class="field clear">
@@ -1693,6 +1697,34 @@ body
 			</div>
 		</div>
 		<br><br>
+
+		<div class="clear"></div>
+		<hr>
+		<div id="creditcard_section" class="container">
+			<form name="CreditCardFrm" id="CreditCardFrm">
+			<div class="field clear">
+				<div class="float_left">Credit Card Name:</div>
+				<div class="float_right"><input type="text" name="cc_owner" /></div>
+			</div>
+			<div class="field clear">
+				<div class="float_left">Credit Card Number:</div>
+				<div class="float_right"><input type="text" name="cc_number" /></div>
+			</div>
+			<div class="field clear">
+				<div class="float_left">Credit Card Exp Month:</div>
+				<div class="float_right"><input type="text" name="cc_expire_date_month" /></div>
+			</div>
+			<div class="field clear">
+				<div class="float_left">Credit Card Exp Year:</div>
+				<div class="float_right"><input type="text" name="cc_expire_date_year" /></div>
+			</div>
+			<div class="field clear">
+				<div class="float_left">Credit Card CVV2:</div>
+				<div class="float_right"><input type="text" name="cc_cvv2" /></div>
+			</div>
+			</form>
+		</div>
+
 		<div class="field clear">
 			<a href="javascript:get_confirmation();" class="btn_standard float_left"><span title="Greate Account" class="button1" id="done"><span>Get Confirmation </span></span></a>
 			<a href="javascript:process_order();" class="btn_standard float_left"><span title="process order" class="button1" id="done"><span>Process Order</span></span></a>
