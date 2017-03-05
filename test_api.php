@@ -35,9 +35,9 @@ $(document).ready(function() {
 });
 
 //add your AbanteCart main index.php URL here 
- var abantecart_url = 'http://[domain]/index.php';
- var abantecart_ssl_url = 'https://[domain]/index.php';
- 
+var abantecart_url = 'http://[domain]/index.php';
+var abantecart_ssl_url = 'https://[domain]/index.php';
+
 var token = '';
 var api_key = '';
 
@@ -50,6 +50,7 @@ function add_to_cart () {
 		'product_id' : $('#product_id').val(),
 		'quantity' : $('#quantity').val(),
 		'option' : {},
+		'token' : token,
 		'api_key' : $('#api_key').val()
 	}
 	input_data.option[ $('#option_id').val() ] = $('#option_value').val();
@@ -73,6 +74,47 @@ function add_to_cart () {
 
 }
 
+function bulk_add_to_cart () {
+
+	$('#api_responce').html( '' );
+
+	var input_data = {
+		'rt': 'a/checkout/cart',
+		'products' : {},
+		'token' : token,
+		'api_key' : $('#api_key').val()
+	}
+
+	var i = 0;
+	$('input[name="product_id[]"]').each(function() {
+		var prod_id = $(this).val();
+		input_data.products[i] = {};
+		input_data.products[i].product_id = prod_id;
+		input_data.products[i].quantity = $('input[name="product_quantity_'+i+'"]').val();
+		input_data.products[i].option = {};
+		input_data.products[i].option[ $('input[name="product_option_id_'+i+'"]').val() ] = $('input[name="product_option_value_'+i+'"]').val();
+		i++;
+	});
+
+	$.ajax({
+		type: 'POST',
+		url: abantecart_url,
+		data: input_data,
+		success: function (data) {
+			showResponse(this, data);
+		},
+		dataType: "text",
+		error: function(obj, status, msg)
+		{
+			console.log(obj);
+			console.log(status);
+			console.log(msg);
+			showResponse(this, obj.responseText);
+		}
+	});
+
+}
+
 function get_cart () {
 
 	$('#api_responce').html( '' );
@@ -80,7 +122,7 @@ function get_cart () {
 	$.ajax({
 		type: 'POST',
 		url: abantecart_url,
-		data: {'rt': 'a/checkout/cart', 'api_key' : $('#api_key').val() },
+		data: {'rt': 'a/checkout/cart', 'token' : token, 'api_key' : $('#api_key').val() },
 		success: function (data)
 		{
 			showResponse(this, data);
@@ -95,7 +137,33 @@ function get_cart () {
 		}
 	});
 
-	}
+}
+
+function clear_cart(){
+	$('#api_responce').html( '' );
+
+	$.ajax({
+		type: 'POST',
+		url: abantecart_url,
+		data: {
+			'rt': 'a/checkout/cart',
+			'remove_all' : 'true',
+			'token' : token,
+			'api_key' : $('#api_key').val()
+		},
+		success: function (data) {
+			showResponse(this, data);
+		},
+		dataType: "text",
+		error: function(obj, status, msg)
+		{
+			console.log(obj);
+			console.log(status);
+			console.log(msg);
+			showResponse(this, obj.responseText);
+		}
+	});
+}
 
 function remove_cart () {
 
@@ -110,6 +178,7 @@ function remove_cart () {
 		data: {
 			'rt': 'a/checkout/cart',
 			'remove' : remove,
+			'token' : token,
 			'api_key' : $('#api_key').val()
 		},
 		success: function (data) {
@@ -140,6 +209,7 @@ function remove_cart_get() {
 		data: {
 			'rt': 'a/checkout/cart/delete',
 			'remove' : remove,
+			'token' : token,
 			'api_key' : $('#api_key').val()
 		},
 		success: function (data) {
@@ -1530,7 +1600,55 @@ body
 
 		<div class="clear"></div>
 		<hr>
-		
+
+		<div class="container">
+			<div class="field clear">
+				<div class="float_left">Product ID #1:</div>
+				<div class="float_right"><input type="text" class="product_id" name="product_id[]" /></div>
+			</div>
+			<div class="field clear">
+				<div class="float_left">Quantity:</div>
+				<div class="float_right"><input type="text" class="product_quantity" name="product_quantity_0" /></div>
+			</div>
+
+			<div class="field clear">
+				<div class="float_left">Option ID:</div>
+				<div class="float_right"><input type="text" class="product_option_id" name="product_option_id_0" /></div>
+			</div>
+			<div class="field clear">
+				<div class="float_left">Option Value:</div>
+				<div class="float_right"><input type="text" class="product_option_value" name="product_option_value_0" /></div>
+			</div>
+		</div>
+		<br><br>
+		<div class="container">
+			<div class="field clear">
+				<div class="float_left">Product ID #2:</div>
+				<div class="float_right"><input type="text" class="product_id" name="product_id[]" /></div>
+			</div>
+			<div class="field clear">
+				<div class="float_left">Quantity:</div>
+				<div class="float_right"><input type="text" class="product_quantity" name="product_quantity_1" /></div>
+			</div>
+
+			<div class="field clear">
+				<div class="float_left">Option ID:</div>
+				<div class="float_right"><input type="text" class="product_option_id" name="product_option_id_1" /></div>
+			</div>
+			<div class="field clear">
+				<div class="float_left">Option Value:</div>
+				<div class="float_right"><input type="text" class="product_option_value" name="product_option_value_1" /></div>
+			</div>
+		</div>
+
+		<div class="field clear">
+			<a href="javascript:bulk_add_to_cart()" class="btn_standard float_left" id="bulk_add_to_cart"><span title="Bulk Add To Cart" class="button1" id="done"><span>Bulk Add to Cart</span></span></a> &nbsp; &nbsp;
+			<a href="javascript:clear_cart();" class="btn_standard float_left"><span title="Clear Cart"><span>Clear Cart</span></span></a>
+		</div>
+
+		<div class="clear"></div>
+		<hr>
+
 		<div id="categories_section">
 			<div class="container">
 				<div class="field clear">
