@@ -14,8 +14,8 @@ $(document).ready(function() {
 		return (debug && original) ? original['log'].apply(original, arguments) : false;
 	}
 
-	$("#api_responce").click(function(){
-		var text = document.getElementById('api_responce');
+	$("#api_response").click(function(){
+		var text = document.getElementById('api_response');
 		if ($.browser.msie) {
 			var range = document.body.createTextRange();
 			range.moveToElementText(text);
@@ -35,15 +35,15 @@ $(document).ready(function() {
 });
 
 //add your AbanteCart main index.php URL here 
-var abantecart_url = 'http://[domain]/index.php';
-var abantecart_ssl_url = 'https://[domain]/index.php';
+var abantecart_url = '';
+var abantecart_ssl_url = '';
 
 var token = '';
 var api_key = '';
 
 function add_to_cart () {
 
-	$('#api_responce').html( '' );
+	$('#api_response').html( '' );
 
 	var input_data = {
 		'rt': 'a/checkout/cart',
@@ -63,7 +63,7 @@ function add_to_cart () {
 			showResponse(this, data);
 		},
 		dataType: "text",
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -76,7 +76,7 @@ function add_to_cart () {
 
 function bulk_add_to_cart () {
 
-	$('#api_responce').html( '' );
+	$('#api_response').html( '' );
 
 	var input_data = {
 		'rt': 'a/checkout/cart',
@@ -117,7 +117,7 @@ function bulk_add_to_cart () {
 
 function get_cart () {
 
-	$('#api_responce').html( '' );
+	$('#api_response').html( '' );
 
 	$.ajax({
 		type: 'POST',
@@ -140,7 +140,7 @@ function get_cart () {
 }
 
 function clear_cart(){
-	$('#api_responce').html( '' );
+	$('#api_response').html( '' );
 
 	$.ajax({
 		type: 'POST',
@@ -167,8 +167,8 @@ function clear_cart(){
 
 function remove_cart () {
 
-    $('#api_responce').html( '' );
-    var remove = {};
+	$('#api_response').html( '' );
+	var remove = {};
 	remove[ $('#remove_key1').val() ] = 1;
 	remove[ $('#remove_key2').val() ] = 1;
 		
@@ -198,8 +198,8 @@ function remove_cart () {
 
 function remove_cart_get() {
 
-    $('#api_responce').html( '' );
-    var remove = {};
+	$('#api_response').html( '' );
+	var remove = {};
 	remove[ $('#remove_key1').val() ] = 1;
 	remove[ $('#remove_key2').val() ] = 1;
 		
@@ -232,42 +232,42 @@ function login () {
 
 	api_key = $('#api_key').val();
 
-    $('#api_responce').html( '' );
-    $.ajax({
-        type: 'POST',
-        url: abantecart_ssl_url,
-        data: {'rt': 'a/account/login', 'email' : $('#email').val(), 'password' : $('#password').val(), 'api_key' : api_key },
+	$('#api_response').html( '' );
+	$.ajax({
+		type: 'POST',
+		url: abantecart_ssl_url,
+		data: {'rt': 'a/account/login', 'email' : $('#email').val(), 'password' : $('#password').val(), 'api_key' : api_key },
 		dataType: "json",
-        success: function (data) {
-            console.log(data);
+		success: function (data) {
+			console.log(data);
 			console.log('Token: '+ data.token);
 			token = data.token;
-            load_account();
-        },
-        error: function(obj, status, msg)
+			load_account();
+		},
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
 			console.log(msg);
 			showResponse(this, obj.responseText);
 		}
-    });
+	});
 
 }
 
 function validate_login () {
 
-    $('#api_responce').html( '' );
+	$('#api_response').html( '' );
 
-    $.ajax({
-        type: 'POST',
-        url: abantecart_ssl_url,
-        data: {'rt': 'a/account/login', 'token' : token, 'api_key' : api_key },
+	$.ajax({
+		type: 'POST',
+		url: abantecart_ssl_url,
+		data: {'rt': 'a/account/login', 'token' : token, 'api_key' : api_key },
 		dataType: "text",
-        success: function (data) {
-            showResponse(this, data);
-        },
-        error: function(obj, status, msg)
+		success: function (data) {
+			showResponse(this, data);
+		},
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -275,71 +275,71 @@ function validate_login () {
 			showResponse(this, obj.responseText);
 		}
 
-    });
+	});
 
 }
 
 function logout () {
 
-    $('#api_responce').html( '' );
+	$('#api_response').html( '' );
 
-    $.ajax({
-        type: 'POST',
-        url: abantecart_ssl_url,
-        data: {'rt': 'a/account/logout', 'token' : token, 'api_key' : api_key },
-        success: function (data) {
-            showResponse( this, data );
-        },
-        dataType: "text",
-        error: function(obj, status, msg)
+	$.ajax({
+		type: 'POST',
+		url: abantecart_ssl_url,
+		data: {'rt': 'a/account/logout', 'token' : token, 'api_key' : api_key },
+		success: function (data) {
+			showResponse( this, data );
+		},
+		dataType: "text",
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
 			console.log(msg);
 			showResponse(this, obj.responseText);
 		}
-    });
+	});
 
 }
 
 function load_account () {
 
-    $.ajax({
-        type: 'POST',
-        url: abantecart_ssl_url,
-        data: {'rt': 'a/account/account', 'token' : token, 'api_key' : api_key },
-        success: function (data) {
-            showResponse(this, data);
-        },
-        dataType: "text",
-        error: function(obj, status, msg)
+	$.ajax({
+		type: 'POST',
+		url: abantecart_ssl_url,
+		data: {'rt': 'a/account/account', 'token' : token, 'api_key' : api_key },
+		success: function (data) {
+			showResponse(this, data);
+		},
+		dataType: "text",
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
 			console.log(msg);
 			showResponse(this, obj.responseText);
 		}
-    });
+	});
 }
 
 function load_history () {
 
-    $.ajax({
-        type: 'POST',
-        url: abantecart_ssl_url,
-        data: {'rt': 'a/account/history', 'token' : token, 'api_key' : api_key },
-        success: function (data) {
-            showResponse(this, data);
-        },
-        dataType: "text",
-        error: function(obj, status, msg)
+	$.ajax({
+		type: 'POST',
+		url: abantecart_ssl_url,
+		data: {'rt': 'a/account/history', 'token' : token, 'api_key' : api_key },
+		success: function (data) {
+			showResponse(this, data);
+		},
+		dataType: "text",
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
 			console.log(msg);
 			showResponse(this, obj.responseText);
 		}
-    });
+	});
 }
 
 function getProduct ()
@@ -358,7 +358,7 @@ function getProduct ()
 		{
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -386,7 +386,7 @@ function getProductQTY ()
 		{
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -413,7 +413,7 @@ function getRelatedProducts()
 			console.log(eval('('+res+')'));
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -440,7 +440,7 @@ function getProductImage()
 			console.log(eval('('+res+')'));
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -467,7 +467,7 @@ function getProductResources()
 			console.log(eval('('+res+')'));
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -494,7 +494,7 @@ function getProductReview()
 			console.log(eval('('+res+')'));
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -516,7 +516,7 @@ function getCategory()
 			console.log(eval('('+res+')'));
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -538,7 +538,7 @@ function getManufacturer()
 			console.log(eval('('+res+')'));
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -560,7 +560,7 @@ function getManufacturers()
 			console.log(eval('('+res+')'));
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -583,7 +583,7 @@ function getProductsByCategory()
 			console.log(eval('('+res+')'));
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -615,7 +615,7 @@ function search()
 			console.log(eval('('+res+')'));
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -629,29 +629,29 @@ function createAccount()
 {
 	var values = {};
 	$.each($('#AccountFrm').serializeArray(), function(i, field) {
-	    values[field.name] = field.value;
+		values[field.name] = field.value;
 	});
 	//values['email'] = Math.random() + values['email'];
 	values['rt'] = 'a/account/create';
 	values['api_key'] = api_key;
-    $.ajax({
-        type: 'POST',
-        url: abantecart_ssl_url,
-        data: values,
+	$.ajax({
+		type: 'POST',
+		url: abantecart_ssl_url,
+		data: values,
 		dataType: 'text',
 		success: function(res)
 		{
 			console.log(eval('('+res+')'));
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
 			console.log(msg);
 			showResponse(this, obj.responseText);
 		}
-    });
+	});
 
 }
 
@@ -670,7 +670,7 @@ function getAccountFields()
 			console.log(eval('('+res+')'));
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -684,30 +684,30 @@ function editAccount()
 {
 	var values = {};
 	$.each($('#AccountEditFrm').serializeArray(), function(i, field) {
-	    values[field.name] = field.value;
+		values[field.name] = field.value;
 	});
 	values['rt'] = 'a/account/edit';
 	values['token'] = token;
 	values['api_key'] = api_key;
 
-    $.ajax({
-        type: 'POST',
-        url: abantecart_ssl_url,
-        data: values,
+	$.ajax({
+		type: 'POST',
+		url: abantecart_ssl_url,
+		data: values,
 		dataType: 'text',
 		success: function(res)
 		{
 			console.log(eval('('+res+')'));
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
 			console.log(msg);
 			showResponse(this, obj.responseText);
 		}
-    });
+	});
 
 }
 
@@ -727,7 +727,7 @@ function getAccountEditFields()
 			console.log(eval('('+res+')'));
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -757,7 +757,7 @@ function getZones()
 			}
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -782,7 +782,7 @@ function getCountries()
 			console.log(eval('('+res+')'));
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -794,157 +794,157 @@ function getCountries()
 
 function get_shipping () {
 
-    $.ajax({
-        type: 'POST',
-        url: abantecart_ssl_url,
-        data: {
-        	'rt': 'a/checkout/shipping',
-        	'token' : token,
-        	'mode' : 'list',
-        	'api_key' : api_key
-        },
-        success: function (data) {
-            showResponse(this, data);
-        },
-        dataType: "text",
-        error: function(obj, status, msg)
+	$.ajax({
+		type: 'POST',
+		url: abantecart_ssl_url,
+		data: {
+			'rt': 'a/checkout/shipping',
+			'token' : token,
+			'mode' : 'list',
+			'api_key' : api_key
+		},
+		success: function (data) {
+			showResponse(this, data);
+		},
+		dataType: "text",
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
 			console.log(msg);
 			showResponse(this, obj.responseText);
 		}
-    });
+	});
 }
 
 function select_shipping () {
 
-    $.ajax({
-        type: 'POST',
-        url: abantecart_ssl_url,
-        data: {
+	$.ajax({
+		type: 'POST',
+		url: abantecart_ssl_url,
+		data: {
 			'rt': 'a/checkout/shipping',
 			'token' : token,
 			'mode' : 'select',
 			shipping_method : $('#shipping_method').val(),
 			'api_key' : api_key
-        },
-        success: function (data) {
-            showResponse(this, data);
-        },
-        dataType: "text",
-        error: function(obj, status, msg)
+		},
+		success: function (data) {
+			showResponse(this, data);
+		},
+		dataType: "text",
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
 			console.log(msg);
 			showResponse(this, obj.responseText);
 		}
-    });
+	});
 }
 
 function get_payment () {
 
-    $.ajax({
-        type: 'POST',
-        url: abantecart_ssl_url,
-        data: {
+	$.ajax({
+		type: 'POST',
+		url: abantecart_ssl_url,
+		data: {
 			'rt': 'a/checkout/payment',
 			'token' : token,
 			'mode' : 'list',
 			'api_key' : api_key
-        },
-        success: function (data) {
-            showResponse(this, data);
-        },
-        dataType: "text",
-        error: function(obj, status, msg)
+		},
+		success: function (data) {
+			showResponse(this, data);
+		},
+		dataType: "text",
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
 			console.log(msg);
 			showResponse(this, obj.responseText);
 		}
-    });
+	});
 }
 
 function select_payment () {
 
-    $.ajax({
-        type: 'POST',
-        url: abantecart_ssl_url,
-        data: {
+	$.ajax({
+		type: 'POST',
+		url: abantecart_ssl_url,
+		data: {
 			'rt': 'a/checkout/payment',
 			'token' : token,
 			'mode' : 'select',
 			'payment_method' : $('#payment_method').val(),
 			'agree' : '1',
 			'api_key' : api_key
-        },
-        success: function (data) {
-            showResponse(this, data);
-        },
-        dataType: "text",
-        error: function(obj, status, msg)
+		},
+		success: function (data) {
+			showResponse(this, data);
+		},
+		dataType: "text",
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
 			console.log(msg);
 			showResponse(this, obj.responseText);
 		}
-    });
+	});
 }
 
 
 function select_shipping_address () {
 
-    $.ajax({
-        type: 'POST',
-        url: abantecart_ssl_url,
-        data: {
+	$.ajax({
+		type: 'POST',
+		url: abantecart_ssl_url,
+		data: {
 			'rt': 'a/checkout/address',
 			'token' : token,
 			'mode' : 'shipping',
 			'api_key' : api_key
-        },
-        success: function (data) {
-            showResponse(this, data);
-        },
-        dataType: "text",
-        error: function(obj, status, msg)
+		},
+		success: function (data) {
+			showResponse(this, data);
+		},
+		dataType: "text",
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
 			console.log(msg);
 			showResponse(this, obj.responseText);
 		}
-    });
+	});
 }
 
 function update_shipping_address () {
 
-    $.ajax({
-        type: 'POST',
-        url: abantecart_ssl_url,
-        data: {
+	$.ajax({
+		type: 'POST',
+		url: abantecart_ssl_url,
+		data: {
 			'rt': 'a/checkout/address',
 			'token' : token,
 			'mode' : 'shipping',
 			'address_id' : $('#shipping_address_id').val(),
 			'api_key' : api_key
-        },
-        success: function (data) {
-            showResponse(this, data);
-        },
-        dataType: "text",
-        error: function(obj, status, msg)
+		},
+		success: function (data) {
+			showResponse(this, data);
+		},
+		dataType: "text",
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
 			console.log(msg);
 			showResponse(this, obj.responseText);
 		}
-    });
+	});
 
 }
 
@@ -952,8 +952,8 @@ function add_shipping_address()
 {
 	var values = {};
 	$.each($('#ShippingAddressFrm').serializeArray(), function(i, field) {
-	    values[field.name] = field.value;
-	    console.log(field.value);
+		values[field.name] = field.value;
+		console.log(field.value);
 	});
 	values['rt'] = 'a/checkout/address';
 	values['token'] = token;
@@ -961,10 +961,10 @@ function add_shipping_address()
 	values['action'] = 'save';
 	values['api_key'] = api_key;
 	
-    $.ajax({
-        type: 'POST',
-        url: abantecart_ssl_url,
-        data: values,
+	$.ajax({
+		type: 'POST',
+		url: abantecart_ssl_url,
+		data: values,
 		dataType: 'text',
 		success: function(res)
 		{
@@ -972,74 +972,99 @@ function add_shipping_address()
 			console.log(eval('('+res+')'));
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
 			console.log(msg);
 			showResponse(this, obj.responseText);
 		}
-    });
+	});
 
 }
 
 function select_payment_address () {
 
-    $.ajax({
-        type: 'POST',
-        url: abantecart_ssl_url,
-        data: {
+	$.ajax({
+		type: 'POST',
+		url: abantecart_ssl_url,
+		data: {
 			'rt': 'a/checkout/address',
 			'token' : token,
 			'mode' : 'payment',
 			'api_key' : api_key
-        },
-        success: function (data) {
-            showResponse(this, data);
-        },
-        dataType: "text",
-        error: function(obj, status, msg)
+		},
+		success: function (data) {
+			showResponse(this, data);
+		},
+		dataType: "text",
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
 			console.log(msg);
 			showResponse(this, obj.responseText);
 		}
-    });
+	});
 }
 
 function update_payment_address () {
 
-    $.ajax({
-        type: 'POST',
-        url: abantecart_ssl_url,
-        data: {
+	$.ajax({
+		type: 'POST',
+		url: abantecart_ssl_url,
+		data: {
 			'rt': 'a/checkout/address',
 			'token' : token,
 			'mode' : 'payment',
 			'address_id' : $('#payment_address_id').val(),
 			'api_key' : api_key
-        },
-        success: function (data) {
-            showResponse(this, data);
-        },
-        dataType: "text",
-        error: function(obj, status, msg)
+		},
+		success: function (data) {
+			showResponse(this, data);
+		},
+		dataType: "text",
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
 			console.log(msg);
 			showResponse(this, obj.responseText);
 		}
-    });
+	});
+}
+function remove_address () {
 
+	$.ajax({
+		type: 'POST',
+		url: abantecart_ssl_url,
+		data: {
+			'rt': 'a/checkout/address',
+			'token' : token,
+			'mode' : 'payment',
+			'action': 'remove',
+			'address_id' : $('#remove_address_id').val(),
+			'api_key' : api_key
+		},
+		success: function (data) {
+			showResponse(this, data);
+		},
+		dataType: "text",
+		error: function(obj, status, msg)
+		{
+			console.log(obj);
+			console.log(status);
+			console.log(msg);
+			showResponse(this, obj.responseText);
+		}
+	});
 }
 
 function add_payment_address()
 {
 	var values = {};
 	$.each($('#ShippingAddressFrm').serializeArray(), function(i, field) {
-	    values[field.name] = field.value;
+		values[field.name] = field.value;
 	});
 	values['rt'] = 'a/checkout/address';
 	values['token'] = token;
@@ -1047,24 +1072,24 @@ function add_payment_address()
 	values['action'] = 'save';
 	values['api_key'] = api_key;
 	
-    $.ajax({
-        type: 'POST',
-        url: abantecart_ssl_url,
-        data: values,
+	$.ajax({
+		type: 'POST',
+		url: abantecart_ssl_url,
+		data: values,
 		dataType: 'text',
 		success: function(res)
 		{
 			console.log(eval('('+res+')'));
 			showResponse(this, res);
 		},
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
 			console.log(msg);
 			showResponse(this, obj.responseText);
 		}
-    });
+	});
 
 }
 
@@ -1082,7 +1107,7 @@ function get_confirmation () {
 			showResponse(this, data);
 		},
 		dataType: "text",
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -1097,7 +1122,7 @@ function process_order() {
 
 	var values = {};
 	$.each($('#CreditCardFrm').serializeArray(), function(i, field) {
-	    values[field.name] = field.value;
+		values[field.name] = field.value;
 	});
 	values['rt'] = 'a/checkout/process';
 	values['token'] = token;
@@ -1111,7 +1136,7 @@ function process_order() {
 			showResponse(this, data);
 		},
 		dataType: "text",
-        error: function(obj, status, msg)
+		error: function(obj, status, msg)
 		{
 			console.log(obj);
 			console.log(status);
@@ -1136,7 +1161,7 @@ function showResponse(ajax, data)
 	}
 	$('#api_request').val(request);
 	var display_data = formatJson( data );
-	$('#api_responce').html( display_data );
+	$('#api_response').html( display_data );
 	$('#shadow').show();
 	$('#response_section').show();
 	scrollTo();
@@ -1180,10 +1205,10 @@ function scrollTo()
 function formatJson(val) {
 	var retval = '';
 	var str = val;
-    var pos = 0;
-    var strLen = str.length;
+	var pos = 0;
+	var strLen = str.length;
 	var indentStr = '&nbsp;&nbsp;&nbsp;&nbsp;';
-    var newLine = '<br />';
+	var newLine = '<br />';
 	var char = '';
 	
 	for (var i=0; i<strLen; i++) {
@@ -1353,7 +1378,7 @@ body
 		<textarea id="api_request" class="request_area"></textarea>
 		<br>
 		Response:<br>
-		<div id="api_responce" class="response_area"></div>
+		<div id="api_response" class="response_area"></div>
 		<div class="clear"></div>
 		<!--
 		<div class="float_right">
@@ -1466,7 +1491,7 @@ body
 					<div class="float_right"><input type="password" value="123456789" id="AccountFrm_confirm" name="confirm"></div>
 				</div>
 				<div class="field clear">
-					<div class="float_left">Newsletter Subsribe:</div>
+					<div class="float_left">Newsletter Subscribe:</div>
 					<div class="float_right"><input type="radio" name="newsletter" value="1" id="AccountFrm_newsletter1"></div>
 				</div>
 				<div class="field clear">
@@ -1477,7 +1502,7 @@ body
 			</div>
 
 			<div class="field clear">
-				<a href="javascript:createAccount();" class="btn_standard float_left"><span title="Greate Account" class="button1" id="done"><span>Create Account</span></span></a>
+				<a href="javascript:createAccount();" class="btn_standard float_left"><span title="Create Account" class="button1" id="done"><span>Create Account</span></span></a>
 				<a href="javascript:getAccountFields();" class="btn_standard float_left"><span title="Get Create Account Fields" class="button1" id="done"><span>Get Create Account Fields</span></span></a>
 			</div>
 		</div>
@@ -1560,7 +1585,7 @@ body
 					<div class="float_left">Product ID:</div>
 					<div class="float_right"><input type="text" id="product_id_qty" /></div>
 					<div class="float_left">Option value ID (optional):</div>
-					<div class="float_right"><input type="text" id="option_value_id_qty" /></div>					
+					<div class="float_right"><input type="text" id="option_value_id_qty" /></div>
 				</div>
 
 				<div class="field clear">
@@ -1571,12 +1596,10 @@ body
 			</div>
 
 			<div class="container">
-
 				<div class="field clear">
 					<div class="float_left">Quantity:</div>
 					<div class="float_right"><input type="text" id="quantity" /></div>
 				</div>
-
 				<div class="field clear">
 					<div class="float_left">Option ID:</div>
 					<div class="float_right"><input type="text" id="option_id" /></div>
@@ -1586,8 +1609,6 @@ body
 					<div class="float_right"><input type="text" id="option_value" /></div>
 				</div>
 			</div>
-
-
 
 			<div class="field clear">
 				<a href="javascript:add_to_cart()" class="btn_standard float_left" id="add_to_cart"><span title="Add To Cart" class="button1" id="done"><span>Add to Cart</span></span></a> &nbsp; &nbsp;
@@ -1748,27 +1769,27 @@ body
 				<a href="javascript:select_payment()" class="btn_standard float_left" id="select_payment"><span title="Select Payment" class="button1" id="done"><span>Select Payment</span></span></a>
 			</div>
 			<div class="field clear">
-				<a href="javascript:select_shipping_address()" class="btn_standard float_left" id="select_shipping_addres"><span title="Select Shipping Address" class="button1" id="done"><span>Different  Shipping Address (get data)</span></span></a>
-				<a href="javascript:select_payment_address()" class="btn_standard float_left" id="select_payment_addres"><span title="Select Payment Address" class="button1" id="done"><span>Different payment(billing) Address (get data)</span></span></a>
+				<a href="javascript:select_shipping_address()" class="btn_standard float_left" id="select_shipping_address"><span title="Select Shipping Address" class="button1" id="done"><span>Different  Shipping Address (get data)</span></span></a>
+				<a href="javascript:select_payment_address()" class="btn_standard float_left" id="select_payment_address"><span title="Select Payment Address" class="button1" id="done"><span>Different payment(billing) Address (get data)</span></span></a>
 			</div>
 			<br><br>
 			<div class="container" style="width:460px;">
 				<div class="field clear">
 					<div class="float_left">Shipping Address Select (shipping address ID):</div>
-					<div class="float_right"><input type="text" value="" id="shipping_address_id" name="Shipping Adress ID"></div>
+					<div class="float_right"><input type="text" value="" id="shipping_address_id" name="Shipping Address ID"></div>
 				</div>
 			</div>
 			<div class="field clear">
-				<a href="javascript:update_shipping_address();" class="btn_standard"><span title="Greate Account" class="button1" id="done"><span>Select Shipping Address</span></span></a>
+				<a href="javascript:update_shipping_address();" class="btn_standard"><span class="button1" id="done"><span>Select Shipping Address</span></span></a>
 			</div>
 			<div class="container" style="width:460px;">
 				<div class="field clear">
 					<div class="float_left">Payment Address Select (payment address ID):</div>
-					<div class="float_right"><input type="text" value="" id="payment_address_id" name="payment Adress ID"></div>
+					<div class="float_right"><input type="text" value="" id="payment_address_id" name="payment Address ID"></div>
 				</div>
 			</div>
 			<div class="field clear">
-				<a href="javascript:update_payment_address();" class="btn_standard float_left"><span title="Greate Account" class="button1" id="done"><span>Select Payment (billing) Address</span></span></a>
+				<a href="javascript:update_payment_address();" class="btn_standard float_left"><span class="button1" id="done"><span>Select Payment (billing) Address</span></span></a>
 			</div>
 			<div class="clear"></div>
 
@@ -1810,10 +1831,22 @@ body
 			</div>
 
 			<div class="field clear">
-				<a href="javascript:add_shipping_address();" class="btn_standard float_left"><span title="Greate Account" class="button1" id="done"><span>Add New Shipping Address</span></span></a>
-				<a href="javascript:add_payment_address();" class="btn_standard float_left"><span title="Greate Account" class="button1" id="done"><span>Add New Payment Address</span></span></a>
+				<a href="javascript:add_shipping_address();" class="btn_standard float_left"><span class="button1" id="done"><span>Add New Shipping Address</span></span></a>
+				<a href="javascript:add_payment_address();" class="btn_standard float_left"><span class="button1" id="done"><span>Add New Payment Address</span></span></a>
 			</div>
 		</div>
+			<br><br>
+		<div class="container" style="width:460px;">
+			<div class="field clear">
+				<div class="float_left">Remove Address ID:</div>
+				<div class="float_right"><input type="text" value="" id="remove_address_id" name="address_id"></div>
+			</div>
+		</div>
+		<div class="field clear">
+			<a href="javascript:if(confirm('Are you sure?')){remove_address();}" class="btn_standard float_left">
+				<span class="button1" id="done"><span>Remove Customer Address</span></span></a>
+		</div>
+		<div class="clear"></div>
 		<br><br>
 
 		<div class="clear"></div>
@@ -1844,7 +1877,7 @@ body
 		</div>
 
 		<div class="field clear">
-			<a href="javascript:get_confirmation();" class="btn_standard float_left"><span title="Greate Account" class="button1" id="done"><span>Get Confirmation </span></span></a>
+			<a href="javascript:get_confirmation();" class="btn_standard float_left"><span class="button1" id="done"><span>Get Confirmation </span></span></a>
 			<a href="javascript:process_order();" class="btn_standard float_left"><span title="process order" class="button1" id="done"><span>Process Order</span></span></a>
 		</div>
 	</div>
