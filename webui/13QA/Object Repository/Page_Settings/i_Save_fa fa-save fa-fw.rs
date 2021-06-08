@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>i_Save_fa fa-save fa-fw</name>
+   <tag></tag>
+   <elementGuidId>fb478c0f-73e5-411b-8ccf-3c381dc1ab8f</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>CSS</key>
+         <value>i.fa.fa-save.fa-fw</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//form[@id='settingFrm']/div[2]/div/div/button/i</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>i</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>fa fa-save fa-fw</value>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;settingFrm&quot;)/div[@class=&quot;panel-footer col-xs-12&quot;]/div[@class=&quot;row&quot;]/div[@class=&quot;col-sm-6 col-sm-offset-3 center&quot;]/button[@class=&quot;btn btn-primary lock-on-click&quot;]/i[@class=&quot;fa fa-save fa-fw&quot;]</value>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//form[@id='settingFrm']/div[2]/div/div/button/i</value>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//div[2]/div/div/button/i</value>
+   </webElementXpaths>
+</WebElementEntity>

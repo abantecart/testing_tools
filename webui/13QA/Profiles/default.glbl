@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalVariableEntities>
+   <description></description>
+   <name>default</name>
+   <tag></tag>
+   <defaultProfile>true</defaultProfile>
+   <GlobalVariableEntity>
+      <description>full https URL witn ending /</description>
+      <initValue>'https://demo.abantecart.com/'</initValue>
+      <name>StoreURLDefault</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>set the DB name for installation test</description>
+      <initValue>'dbname'</initValue>
+      <name>DbName</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'index.php?s=demo_admin'</initValue>
+      <name>AdminURL</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'cars/'</initValue>
+      <name>Store2Url</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'dbusername'</initValue>
+      <name>DBuser</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>database password</description>
+      <initValue>'dbpassword'</initValue>
+      <name>DBpassword</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'demo'</initValue>
+      <name>defaultAdminUsername</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>never in use just for reference</description>
+      <initValue>'demo'</initValue>
+      <name>defaultAdminPassword</name>
+   </GlobalVariableEntity>
+</GlobalVariableEntities>

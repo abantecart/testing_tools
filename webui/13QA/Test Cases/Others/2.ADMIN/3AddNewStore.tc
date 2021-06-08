@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description>with clone settings</description>
+   <name>3AddNewStore</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>fc9baf17-eced-47ef-9e40-7ef79a1a54f9</testCaseGuid>
+</TestCaseEntity>
